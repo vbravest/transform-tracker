@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+    <body>
+        <canvas id="my-canvas" width="800" height="600"></canvas>
+    
+        <script type="text/javascript" src="transform-tracker.js"></script>
+        <script type="text/javascript">
+            var canvas = document.getElementById('my-canvas');
+            var context = canvas.getContext('2d');
+
+            // create transform tracker object
+            context.transform = new Transform(context);
+
+            // apply transformations
+            context.transform.save();
+            context.transform.translate(200, 0);
+            
+            context.transform.save();
+            context.transform.rotate(Math.PI / 4);
+            
+            context.transform.save();
+            context.transform.scale(2, 2);
+            
+            // retrieve current state of transformations
+            var matrix = context.transform.getMatrix();
+            console.log('matrix:', JSON.stringify(matrix));
+            var stack = context.transform.stack;
+            console.log('stack:', JSON.stringify(stack));            
+            
+            // render 
+            context.fillStyle = 'red';
+            context.fillRect(0,0,100,100);
+            
+            context.transform.restore();
+            context.transform.restore();
+            context.transform.restore();
+        </script>
+    </body>
+</html>
